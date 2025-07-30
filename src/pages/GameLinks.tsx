@@ -14,7 +14,7 @@ const games = [
   { name: "Juwa", image: "jpg/juwa.jpg" },
   { name: "Game", image: "jpg/gamee.jpg" },
   { name: "GameVault", image: "jpg/vault.jpg" },
-  { name: "CasionRoyale", image: "jpg/royale.jpg" },
+  { name: "CasinoRoyale", image: "jpg/royale.jpg" },
   { name: "VegasSweep", image: "jpg/vegas.jpg" },
   { name: "MilkyWay", image: "jpg/milkyways.jpg" },
   { name: "Ultra Panda", image: "jpg/panda.jpg" },
@@ -27,7 +27,7 @@ const games = [
   { name: "Acebook", image: "jpg/ace.jpg" },
   { name: "Blue Dragon", image: "jpg/dragons.jpg" },
   { name: "GameVault", image: "jpg/vault.jpg" },
-  { name: "CasionRoyale", image: "jpg/royale.jpg" },
+  { name: "CasinoRoyale", image: "jpg/royale.jpg" },
   { name: "VegasSweep", image: "jpg/vegas.jpg" },
 ];
 

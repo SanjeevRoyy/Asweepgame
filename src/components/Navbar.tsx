@@ -5,8 +5,10 @@ import { ImCross } from "react-icons/im";
 import { CiLock } from "react-icons/ci";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FaRegCircleUser } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -185,6 +187,7 @@ const Navbar = () => {
 
               {/* Submit */}
               <button
+              onClick={() => navigate('/admin')}
                 type="submit"
                 className="w-full py-2 rounded-md button-primary text-black font-semibold text-sm transition"
               >

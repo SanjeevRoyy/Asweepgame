@@ -1,18 +1,94 @@
+import { FaTelegramPlane } from "react-icons/fa";
+import { IoIosCall, IoIosInformation } from "react-icons/io";
+import { useState } from "react";
+
 const Navbar = () => {
-    return (
-      <div className="px-4 sm:px-8 md:px-14 py-3 sm:py-5 chakra-colors-gray-800 flex justify-between items-center">
-        <h1 className="gradient-text jaini-regular text-xl sm:text-3xl md:text-3xl relative">
-          Asweep
-          <span className="absolute top-0 left-0 w-full h-[2px] bg-white" />
-          <span className="absolute bottom-0 left-0 w-full h-[2px] bg-white" />
-        </h1>
-  
-        <button className="button-gradient text-sm sm:text-base px-3 sm:px-5 py-1 sm:py-2">
-          Login
-        </button>
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <nav className="bg-transparent py-2 px-4 sm:px-8 md:px-16">
+      <div className="max-w-[1280px] mx-auto flex items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <img src="png/logo.png" alt="logo" className="w-10 h-8 sm:w-11 sm:h-8" />
+          <p className="text-secondary font-bold text-custom-30 text-sm sm:text-base">ACESWEEPS</p>
+        </div>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-6">
+          <div className="flex gap-4 p-2">
+            <div className="circle-button">
+              <FaTelegramPlane color="black" size={22} />
+            </div>
+            <div className="circle-button">
+              <IoIosCall color="black" size={22} />
+            </div>
+            <div className="circle-button">
+              <IoIosInformation color="black" size={36} />
+            </div>
+          </div>
+
+          <button className="button-primary">
+            <span className="button-content text-sm sm:text-base">Admin Login</span>
+          </button>
+        </div>
+
+        {/* Mobile Hamburger */}
+        <div className="md:hidden">
+          <button
+            aria-label="Toggle Menu"
+            className="text-secondary"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {/* Hamburger icon */}
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {menuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
-    );
-  };
-  
-  export default Navbar;
-  
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden mt-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 space-y-4">
+          <div className="flex justify-center gap-6">
+            <div className="circle-button">
+              <FaTelegramPlane color="black" size={25} />
+            </div>
+            <div className="circle-button">
+              <IoIosCall color="black" size={25} />
+            </div>
+            <div className="circle-button">
+              <IoIosInformation color="black" size={40} />
+            </div>
+          </div>
+          <button className="button-primary w-full">
+            <span className="button-content">Admin Login</span>
+          </button>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;

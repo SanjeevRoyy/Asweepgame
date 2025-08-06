@@ -1,119 +1,114 @@
-const topWheelers = [
-  { name: "1. Mary Johnson", amount: "$ 95.31" },
-  { name: "2. Sylvia Miller", amount: "$ 72.91" },
-  { name: "3. Phillip Calderon", amount: "$ 53.65" },
-];
+import { useState, useEffect } from "react";
 
 const games = [
   { name: "FireKirin", image: "jpg/fire.jpg" },
   { name: "OrionStar", image: "jpg/orion.jpg" },
   { name: "Juwa", image: "jpg/juwa.jpg" },
   { name: "Game", image: "jpg/gamee.jpg" },
-  { name: "FireKirin", image: "jpg/fire.jpg" },
-  { name: "OrionStar", image: "jpg/orion.jpg" },
-  { name: "Juwa", image: "jpg/juwa.jpg" },
-  { name: "Game", image: "jpg/gamee.jpg" },
-  { name: "GameVault", image: "jpg/vault.jpg" },
+  { name: "Game Vault", image: "jpg/vault.jpg" },
   { name: "CasinoRoyale", image: "jpg/royale.jpg" },
   { name: "VegasSweep", image: "jpg/vegas.jpg" },
   { name: "MilkyWay", image: "jpg/milkyways.jpg" },
   { name: "Ultra Panda", image: "jpg/panda.jpg" },
   { name: "Cash Frenzy", image: "jpg/frenzy.jpg" },
   { name: "PandaMaster", image: "jpg/pandamaster.jpg" },
-  { name: "Vblink", image: "jpg/vblink.jpg" },
+  { name: "V Blink", image: "jpg/vblink.jpg" },
   { name: "River Sweeps", image: "jpg/reversweeps.png" },
   { name: "HighStake", image: "jpg/highstake.jpg" },
-  { name: "VegasX", image: "jpg/vegasx.png" },
-  { name: "Acebook", image: "jpg/ace.jpg" },
+  { name: "Vegas X", image: "jpg/vegasx.png" },
+  { name: "Fire Kirin", image: "jpg/fire.jpg" },
   { name: "Blue Dragon", image: "jpg/dragons.jpg" },
-  { name: "GameVault", image: "jpg/vault.jpg" },
-  { name: "CasinoRoyale", image: "jpg/royale.jpg" },
-  { name: "VegasSweep", image: "jpg/vegas.jpg" },
+  { name: "Yolo", image: "jpg/yolo.png" },
+  { name: "Game Room", image: "jpg/gameroom.png" },
+  { name: "Joker", image: "jpg/joker.png" },
+  { name: "Fire Kirin", image: "jpg/mafia.png" },
 ];
 
+const SkeletonCard = () => (
+  <div className="flex flex-col items-center text-center rounded-xl py-5 p-4 bg-white/10 backdrop-blur-sm border border-white/10 shadow-lg animate-pulse w-full max-w-[200px] mx-auto">
+    <div className="w-full aspect-square rounded-lg bg-gray-400/20 mb-4" />
+    <div className="h-6 w-32 bg-gray-400/20 rounded mb-4" />
+    <div className="h-10 w-full bg-gray-400/20 rounded" />
+  </div>
+);
+
+const GameCard = ({ name, image }: { name: string; image: string }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className="flex flex-col items-center text-center rounded-xl py-5 p-4 bg-white/10 backdrop-blur-sm border border-white/10 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full max-w-[200px] mx-auto">
+      <div className="w-full aspect-square rounded-lg overflow-hidden relative">
+        {!loaded && (
+          <div className="absolute inset-0 bg-gray-400/20 animate-pulse rounded-lg" />
+        )}
+        <img
+          src={image}
+          alt={name}
+          loading="lazy"
+          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
+            loaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setLoaded(true)}
+        />
+      </div>
+
+      <p className="mt-4 text-primary font-medium text-[22px] text-custom truncate max-w-full">
+        {name}
+      </p>
+
+      <button className="button-primary mt-3 w-full max-w-[180px] sm:max-w-[220px] px-3 py-1 sm:px-4 sm:py-2">
+        <span className="button-content text-xs sm:text-sm whitespace-nowrap">
+          PLAY NOW
+        </span>
+      </button>
+    </div>
+  );
+};
+
 const GameLinks = () => {
-    return (
-      <div className="bg-[#101010] p-5 sm:p-8">
-        {/* Title - smaller margin bottom on mobile */}
-        <h1 className="text-[20px] sm:text-[24px] text-center font-jaini font-normal leading-[1.2] bg-gradient-to-b from-[#FFF600] via-[#FFAE00] to-[#FFE24E] bg-clip-text text-transparent text-shadow mb-2 sm:mb-6">
-          Yesterday's top 3 wheelers
-        </h1>
-  
-        {/* Top wheelers */}
-        <div className="flex flex-wrap justify-center gap-3 sm:gap-5 mt-1 sm:mt-3">
-          {topWheelers.map(({ name, amount }, index) => (
-            <div
-              key={index}
-              className="bg-gradient-to-b from-[#FFF600] via-[#FFAE00] to-[#FFE24E] rounded-full p-[2px]"
-            >
-              <div className="bg-[#101010] rounded-full w-[280px] sm:w-[360px] flex justify-between items-center px-4 sm:px-6 py-2 sm:py-3">
-                <p className="text-[16px] sm:text-[18px] font-jaini bg-gradient-to-b from-[#FFF600] via-[#FFAE00] to-[#FFE24E] bg-clip-text text-transparent text-shadow truncate">
-                  {name}
-                </p>
-                <p className="text-[16px] sm:text-[18px] font-jaini bg-gradient-to-b from-[#FFF600] via-[#FFAE00] to-[#FFE24E] bg-clip-text text-transparent text-shadow">
-                  {amount}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-  
-        {/* Game Links Buttons */}
-        <div>
-          <h1 className="gradient-text leading-tight text-3xl text-center mt-8 sm:mt-10">
-            Game Links
-          </h1>
-          <div className="flex justify-center items-center gap-2 sm:gap-3 mt-3 sm:mt-5">
-            <button className="gradient-border-button text-sm sm:text-base px-3 sm:px-6 py-1 sm:py-3">
-              Player Link
-            </button>
-            <div className="flex gap-1 sm:gap-2">
-              <div className="h-16 w-[2px] bg-gradient-to-b from-[#FFF600] via-[#FFAE00] to-[#FFE24E]" />
-              <div className="h-16 w-[2px] bg-gradient-to-b from-[#FFF600] via-[#FFAE00] to-[#FFE24E]" />
-            </div>
-            <button className="gradient-white-button text-sm sm:text-base px-3 sm:px-6 py-1 sm:py-3">
-              Agent Link
-            </button>
-          </div>
-        </div>
-  
-        {/* Games section */}
-        <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-5 mt-8 sm:mt-10 px-2 sm:px-4">
-          {games.map((game, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center text-center rounded-xl"
-            >
-              <img
-                src={game.image}
-                alt={game.name}
-                className="w-[100px] sm:w-[140px] md:w-[180px] h-[100px] sm:h-[140px] md:h-[180px] object-cover rounded-lg"
-              />
-              <button className="mt-3 relative px-2 sm:px-4 pb-1 font-jaini text-[20px] sm:text-[28px] font-normal leading-[1.2] whitespace-nowrap overflow-hidden text-ellipsis bg-clip-text text-transparent bg-gradient-to-b from-[#FFF600] via-[#FFAE00] to-[#FFE24E] shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
-                <span className="gradient-text">{game.name}</span>
-  
-                {/* Top border */}
-                <span className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#FFF600] via-[#FFAE00] to-[#FFE24E]" />
-  
-                {/* Bottom border */}
-                <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#FFF600] via-[#FFAE00] to-[#FFE24E]" />
-              </button>
-            </div>
-          ))}
-        </div>
-  
-        {/* We Accept Section */}
-        <h1 className="gradient-text leading-tight text-3xl text-center mt-8 sm:mt-10">
-          We Accept
-        </h1>
-        <div className="flex justify-center items-center gap-4 mt-2">
-          <img src="png/dollar.png" alt="Dollar" className="w-10 h-10 sm:w-12 sm:h-12" />
-          <img src="png/bitcoin.png" alt="Bitcoin" className="w-10 h-10 sm:w-12 sm:h-12" />
+  const [loading, setLoading] = useState(true);
+
+  // Simulate loading delay (replace with real data fetching)
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="p-5 sm:p-8 max-w-[1280px] mx-auto">
+      <div>
+        <p className="text-gradient text-secondary text-[32px] sm:text-[40px] font-bold text-center">
+          GAME LINKS
+        </p>
+        <div className="flex justify-center items-center gap-2 mt-3 flex-wrap">
+          <button className="button-primary">
+            <span className="button-content">PLAYER LINKS</span>
+          </button>
+
+          <button className="button-outline">
+            <span className="button-content">AGENT LINKS</span>
+          </button>
         </div>
       </div>
-    );
-  };
-  
-  
+
+      {/* Games Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-8 p-1 sm:p-2 md:p-4">
+        {loading
+          ? Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)
+          : games.map((game, index) => (
+              <GameCard key={index} name={game.name} image={game.image} />
+            ))}
+      </div>
+
+      <div className="flex justify-center items-center mt-5">
+        <button className="button-outline mt-5 px-3 py-1 sm:px-5 sm:py-2">
+          <span className="button-content font-semibold text-[12px] sm:text-[16px] md:text-[18px] whitespace-nowrap">
+            MORE GAMES COMING SOON!
+          </span>
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default GameLinks;

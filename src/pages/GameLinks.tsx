@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const games = [
   { name: "FireKirin", image: "jpg/fire.jpg" },
@@ -32,11 +35,39 @@ const SkeletonCard = () => (
   </div>
 );
 
-const GameCard = ({ name, image }: { name: string; image: string }) => {
+const GameCard = ({
+  name,
+  image,
+  custom,
+}: {
+  name: string;
+  image: string;
+  custom?: number; // for delay
+}) => {
   const [loaded, setLoaded] = useState(false);
 
+  // Animation variants for each card
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (custom = 0) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: custom * 0.15, // stagger effect based on index
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    }),
+  };
+
   return (
-    <div className="flex flex-col items-center text-center rounded-xl py-5 p-4 bg-white/10 backdrop-blur-sm border border-white/10 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full max-w-[200px] mx-auto">
+    <motion.div
+      variants={itemVariants}
+      initial="hidden"
+      animate="visible"
+      custom={custom}
+      className="flex flex-col items-center text-center rounded-xl py-5 p-4 bg-white/10 backdrop-blur-sm border border-white/10 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full max-w-[200px] mx-auto"
+    >
       <div className="w-full aspect-square rounded-lg overflow-hidden relative">
         {!loaded && (
           <div className="absolute inset-0 bg-gray-400/20 animate-pulse rounded-lg" />
@@ -61,18 +92,33 @@ const GameCard = ({ name, image }: { name: string; image: string }) => {
           PLAY NOW
         </span>
       </button>
-    </div>
+    </motion.div>
   );
 };
 
 const GameLinks = () => {
   const [loading, setLoading] = useState(true);
 
-  // Simulate loading delay (replace with real data fetching)
+  // Intersection Observer to trigger animation on scroll
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1500);
     return () => clearTimeout(timer);
   }, []);
+
+  // Container variants for stagger children
+  const containerVariants: Variants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
 
   return (
     <div className="p-5 sm:p-8 max-w-[1280px] mx-auto">
@@ -92,13 +138,24 @@ const GameLinks = () => {
       </div>
 
       {/* Games Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-8 p-1 sm:p-2 md:p-4">
+      <motion.div
+        ref={ref}
+        variants={containerVariants}
+        initial="hidden"
+        animate={inView ? "visible" : "hidden"}
+        className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-8 p-1 sm:p-2 md:p-4"
+      >
         {loading
           ? Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)
           : games.map((game, index) => (
-              <GameCard key={index} name={game.name} image={game.image} />
+              <GameCard
+                key={index}
+                name={game.name}
+                image={game.image}
+                custom={index}
+              />
             ))}
-      </div>
+      </motion.div>
 
       <div className="flex justify-center items-center mt-5">
         <button className="button-outline mt-5 px-3 py-1 sm:px-5 sm:py-2">

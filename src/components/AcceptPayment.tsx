@@ -1,5 +1,7 @@
 import { FaTelegramPlane } from "react-icons/fa";
 import { IoIosCall, IoIosInformation } from "react-icons/io";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 const img = [
   "payment/chime.png",
@@ -10,50 +12,112 @@ const img = [
   "payment/paypal.png",
 ];
 
+const titleVariants: Variants = {
+  hidden: { opacity: 0, y: -30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut" },
+  },
+};
+
+const listVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
+
+const fadeInVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
+};
+
 const AcceptPayment = () => {
   return (
-    <div className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl hover:shadow-2xl transition-shadow duration-300 p-4 sm:p-6 md:p-8 rounded-2xl w-full max-w-[720px] mx-auto">
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      className="bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl hover:shadow-2xl transition-shadow duration-300 p-4 sm:p-6 md:p-8 rounded-2xl w-full max-w-[720px] mx-auto"
+    >
       {/* Title */}
-      <p className="text-center text-gradient text-secondary text-[18px] sm:text-[22px] font-extrabold">
+      <motion.p
+        variants={titleVariants}
+        className="text-center text-gradient text-secondary text-[18px] sm:text-[22px] font-extrabold"
+      >
         WE ACCEPT
-      </p>
+      </motion.p>
 
       {/* Payment Icons */}
-      <div className="flex flex-wrap justify-center items-center gap-4 px-2 sm:px-4 mt-4">
+      <motion.div
+        variants={listVariants}
+        className="flex flex-wrap justify-center items-center gap-4 px-2 sm:px-4 mt-4"
+      >
         {img.map((src, index) => (
-          <img
+          <motion.img
             key={index}
+            variants={itemVariants}
             src={src}
             alt="Payment Method"
             className="w-10 sm:w-14 md:w-16 object-contain"
           />
         ))}
-      </div>
+      </motion.div>
 
       {/* Connect with us title */}
-      <p className="text-secondary text-[18px] sm:text-[20px] font-semibold text-center mt-6">
+      <motion.p
+        variants={fadeInVariants}
+        className="text-secondary text-[18px] sm:text-[20px] font-semibold text-center mt-6"
+      >
         CONNECT WITH US
-      </p>
+      </motion.p>
 
       {/* Social Icons */}
-      <div className="flex gap-4 justify-center mt-4">
-        <div className="circle-button w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+      <motion.div
+        variants={listVariants}
+        className="flex gap-4 justify-center mt-4"
+      >
+        <motion.div
+          variants={itemVariants}
+          className="circle-button w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center"
+        >
           <FaTelegramPlane size={20} className="text-black" />
-        </div>
-        <div className="circle-button w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+        </motion.div>
+        <motion.div
+          variants={itemVariants}
+          className="circle-button w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center"
+        >
           <IoIosCall size={20} className="text-black" />
-        </div>
-        <div className="circle-button w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+        </motion.div>
+        <motion.div
+          variants={itemVariants}
+          className="circle-button w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center"
+        >
           <IoIosInformation size={32} className="text-black" />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Copyright */}
-      <p className="text-secondary text-[14px] sm:text-[16px] mt-4 text-center font-regular">
+      <motion.p
+        variants={fadeInVariants}
+        className="text-secondary text-[14px] sm:text-[16px] mt-4 text-center font-regular"
+      >
         © Copyright 2025, All Rights Reserved by{" "}
         <strong>Acesweeps.com</strong>
-      </p>
-    </div>
+      </motion.p>
+    </motion.div>
   );
 };
 

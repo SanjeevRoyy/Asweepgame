@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { FaTelegramPlane } from "react-icons/fa";
 import { IoIosCall, IoIosInformation } from "react-icons/io";
 import { ImCross } from "react-icons/im";
@@ -12,6 +13,36 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  // Add controlled inputs for identifier & password
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const res = await axios.post("http://localhost:1337/api/auth/local", {
+        identifier,
+        password,
+      });
+
+      const { jwt, user } = res.data;
+      // Save token locally (optional)
+      localStorage.setItem("token", jwt);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      // Navigate to admin page
+      navigate("/admin");
+
+      // Close modal
+      setShowModal(false);
+    } catch (err) {
+      setError("Invalid username or password");
+    }
+  };
 
   return (
     <>
@@ -112,7 +143,7 @@ const Navbar = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-[1px] flex justify-center items-center px-4">
-        <div
+          <div
             className="bg-[#1c1226] rounded-xl p-6 w-full max-w-md relative
                           sm:max-w-lg md:max-w-md lg:max-w-lg xl:max-w-md"
           >
@@ -123,12 +154,15 @@ const Navbar = () => {
               <ImCross color="white" size={15} />
             </button>
 
-            <form className="space-y-6 p-6 md:p-8 rounded-xl bg-transparent">
+            <form
+              onSubmit={handleLogin}
+              className="space-y-6 p-6 md:p-8 rounded-xl bg-transparent"
+            >
               <h2 className="text-white text-xl font-semibold text-center mb-4">
                 Admin Login
               </h2>
 
-              {/* Username */}
+              {/* Username / ID */}
               <div className="space-y-1">
                 <label className="text-sm font-medium text-white">
                   Username or ID
@@ -141,6 +175,9 @@ const Navbar = () => {
                     type="text"
                     placeholder="Enter your username or ID"
                     className="w-full pl-10 pr-4 py-2 rounded-md text-sm bg-white/10 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
+                    value={identifier}
+                    onChange={(e) => setIdentifier(e.target.value)}
+                    required
                   />
                 </div>
               </div>
@@ -158,6 +195,9 @@ const Navbar = () => {
                     type={passwordVisible ? "text" : "password"}
                     placeholder="Enter your password"
                     className="w-full pl-10 pr-10 py-2 rounded-md text-sm bg-white/10 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                   <button
                     type="button"
@@ -185,9 +225,13 @@ const Navbar = () => {
                 </label>
               </div>
 
+              {/* Error message */}
+              {error && (
+                <p className="text-red-400 text-center text-sm">{error}</p>
+              )}
+
               {/* Submit */}
               <button
-              onClick={() => navigate('/admin')}
                 type="submit"
                 className="w-full py-2 rounded-md button-primary text-black font-semibold text-sm transition"
               >

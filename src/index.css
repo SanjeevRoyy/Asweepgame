@@ -89,6 +89,14 @@
   font-size: 1.5rem;
 }
 
+@media (min-width: 640px) {
+  .button-primary {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.875rem;
+    max-width: 220px;
+  }
+}
+
 .text-primary {
   font-family: "Lato", sans-serif;
   color: inherit;
@@ -250,4 +258,47 @@
 }
 .rectangle-button:hover {
   transform: scale(1.05);
+}
+
+
+.button-primary-mobile {
+  position: relative;
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  background: linear-gradient(135deg, #7f00ff, #e100ff);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease-in-out;
+  border-radius: 8px; 
+  font-weight: 800;
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+  font-size: 0.75rem; 
+  line-height: 1;
+  user-select: none;
+}
+
+.button-primary-mobile:hover {
+  transform: scale(1.05);
+}
+
+.button-primary-mobile .button-content {
+  display: inline-block;
+  transform: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .button-primary {
+    padding: 0.4rem 1rem;
+    max-width: 140px; 
+  }
+
+  .button-primary .button-content {
+    transform: none !important;
+    white-space: nowrap;
+    font-size: 0.75rem; 
+  }
 }

@@ -164,7 +164,11 @@ const GameCard = ({
       animate="visible"
       custom={custom}
       whileHover={{ scale: 1.05 }}
-      className="flex flex-col items-center text-center rounded-xl py-5 p-4 bg-white/10 backdrop-blur-sm border border-white/10 shadow-lg hover:shadow-xl transition-shadow duration-300 w-full max-w-[200px] mx-auto"
+      className="flex flex-col items-center text-center rounded-xl 
+  py-3 px-3 sm:py-5 sm:px-4 
+  bg-white/10 backdrop-blur-sm border border-white/10 shadow-lg 
+  hover:shadow-xl transition-shadow duration-300 
+  w-full max-w-[200px] mx-auto"
     >
       <div className="w-full aspect-square rounded-lg overflow-hidden relative">
         {!loaded && (
@@ -181,23 +185,29 @@ const GameCard = ({
         />
       </div>
 
-      <p className="mt-4 text-primary font-medium text-[22px] truncate max-w-full">
+      <p className="mt-3 sm:mt-4 text-primary font-medium text-[16px] sm:text-[22px] truncate max-w-full">
         {name}
       </p>
-
       {link && (
         <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full mt-3"
-        >
-          <button className="button-primary w-full max-w-[180px] sm:max-w-[220px] px-3 py-1 sm:px-4 sm:py-2">
-            <span className="button-content text-xs sm:text-sm whitespace-nowrap">
-              PLAY NOW
-            </span>
-          </button>
-        </a>
+  href={link}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-full mt-3"
+>
+  {/* Desktop button (md and up) */}
+<button
+  className="button-primary w-full max-w-[180px] px-3 py-2 hidden md:flex items-center justify-center 
+             hover:scale-105 transition-transform duration-200"
+>
+  <span className="button-content text-xs md:text-sm whitespace-nowrap">
+    PLAY NOW
+  </span>
+</button>
+
+  
+</a>
+
       )}
     </motion.div>
   );
@@ -227,14 +237,14 @@ const GameLinks = () => {
       : games.filter((g) => g.adminlink && g.adminlink !== "nolink");
 
   return (
-    <div className="p-5 sm:p-8 max-w-[1280px] mx-auto">
+    <div className="p-1 sm:p-6 md:p-8 max-w-[1280px] mx-auto">
       <div>
         <p className="text-gradient text-secondary text-[32px] sm:text-[40px] font-bold text-center">
           GAME LINKS
         </p>
         <div className="flex justify-center items-center gap-2 mt-3 flex-wrap">
           <button
-            className={`button-primary ${
+            className={`button-primary   ${
               filter === "player" ? "opacity-100" : "opacity-60"
             }`}
             onClick={() => setFilter("player")}
@@ -259,7 +269,7 @@ const GameLinks = () => {
         variants={containerVariants}
         initial="hidden"
         animate={inView ? "visible" : "hidden"}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-8 p-1 sm:p-2 md:p-4"
+        className="grid grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 mt-8 p-1 sm:p-2 md:p-4"
       >
         {loading
           ? Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)
@@ -273,7 +283,6 @@ const GameLinks = () => {
               />
             ))}
       </motion.div>
-
       <div className="flex justify-center items-center mt-5">
         <button className="button-outline mt-5 px-3 py-1 sm:px-5 sm:py-2">
           <span className="button-content font-semibold text-[12px] sm:text-[16px] md:text-[18px] whitespace-nowrap">

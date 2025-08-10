@@ -117,27 +117,33 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu */}
-        {menuOpen && (
-          <div className="md:hidden mt-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 space-y-4">
-            <div className="flex justify-center gap-6">
-              <div className="circle-button">
-                <FaTelegramPlane color="black" size={25} />
-              </div>
-              <div className="circle-button">
-                <IoIosCall color="black" size={25} />
-              </div>
-              <div className="circle-button">
-                <IoIosInformation color="black" size={40} />
-              </div>
-            </div>
-            <button
-              className="button-primary w-full"
-              onClick={() => setShowModal(true)}
-            >
-              <span className="button-content">Admin Login</span>
-            </button>
-          </div>
-        )}
+     {/* Mobile Menu */}
+{menuOpen && (
+  <div className="md:hidden mt-4 bg-white/10 backdrop-blur-sm rounded-lg p-4 space-y-4">
+    <div className="flex justify-center gap-6">
+      <div className="circle-button">
+        <FaTelegramPlane color="black" size={25} />
+      </div>
+      <div className="circle-button">
+        <IoIosCall color="black" size={25} />
+      </div>
+      <div className="circle-button">
+        <IoIosInformation color="black" size={40} />
+      </div>
+    </div>
+
+    {/* Wrap button in flex container */}
+    <div className="flex justify-center">
+      <button
+        className="button-primary max-w-[180px] w-full"
+        onClick={() => setShowModal(true)}
+      >
+        <span className="button-content">Admin Login</span>
+      </button>
+    </div>
+  </div>
+)}
+
       </nav>
 
       {/* Modal */}
@@ -231,12 +237,14 @@ const Navbar = () => {
               )}
 
               {/* Submit */}
-              <button
-                type="submit"
-                className="w-full py-2 rounded-md button-primary text-black font-semibold text-sm transition"
-              >
-                Login
-              </button>
+             <div className="flex justify-center">
+  <button
+    type="submit"
+    className="button-primary max-w-[180px] w-full py-2 rounded-md text-black font-semibold text-sm transition"
+  >
+    Login
+  </button>
+</div>
             </form>
           </div>
         </div>
